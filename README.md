@@ -12,7 +12,7 @@ Setup:
 - Place the script files somewhere ALVR can get to. (inside the ALVR executable's folder is fine)
 - Open ALVR's config screen. (or session.json if you're feeling special)
 - Change both the "On Connect Script" and "On Disconnect Script" options to contain the *absolute* path to the script.bat file.
-	- Windows users: this would be something like "C:\\Users\\<user>\\Programs\\alvr_streamer_windows\\script\\script.bat"
+	- Windows users: this would be something like "C:\\Users\\user\\Programs\\alvr_streamer_windows\\script\\script.bat"
 	- Linux users: make a .sh file that runs connection.py and use that instead. I trust you know at least how to do that. I don't have a VR setup on Linux at the moment so I can't test unfortunately.
 
 You can edit the script to change basic functionality, there are some variables near the top of "connection.py" with descriptive comments so they should be easy to find.
