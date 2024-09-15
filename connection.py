@@ -32,10 +32,12 @@ STREAMER = "ALVR"
 GAME_IP = "127.0.0.1"
 
 # the port the game is using to take in OSC messages.
+#GAME_PORT = 9086 # custom port for routing
 GAME_PORT = 9000
 
 # the address to write to, set to true when the headset is connected, false when disconnected.
 # for vrchat avatars, set to a BOOL parameter like "/avatar/parameters/<parameter>"
+# CONNECTION_PARAMETER = "/avatar/parameters/VRCOSC/OpenVR/HMD/Connected"
 CONNECTION_PARAMETER = "/avatar/parameters/hardware/headsetConnected"
 
 # if true, send a chatbox message when the headset loses or regains connection
