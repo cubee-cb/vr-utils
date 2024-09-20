@@ -6,9 +6,6 @@ send arbitrary values to arbitrary parameters
 https://github.com/attwad/python-osc
 """
 
-import os
-import time
-
 from tkinter import messagebox
 from pythonosc.dispatcher import Dispatcher
 from pythonosc import udp_client

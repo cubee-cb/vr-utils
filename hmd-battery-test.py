@@ -58,7 +58,7 @@ while True:
   print("2 for empty")
   print("3 for charge test")
   print("4 for drain test")
-  print("5 for disconnect battery")
+  print("5 for clear battery")
   print("6 for OVR TOOLKIT - connection with battery level")
   print("7 for OVR TOOLKIT - connection ONLY")
   print("8 to clear OVR TOOLKIT")
