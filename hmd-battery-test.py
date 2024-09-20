@@ -37,7 +37,7 @@ GAME_PORT = 9000
 # the address to write to, set to true when the headset is connected, false when disconnected.
 # for vrchat avatars, set to a BOOL parameter like "/avatar/parameters/<parameter>"
 # CONNECTION_PARAMETER = "/avatar/parameters/VRCOSC/OpenVR/HMD/Battery"
-CONNECTION_PARAMETER = "/avatar/parameters/battery/level"
+CONNECTION_PARAMETER = "/avatar/parameters/battery/hmd"
 
 # if true, send a chatbox message when the headset loses or regains connection
 USE_CHATBOX = True
@@ -54,7 +54,14 @@ client = udp_client.SimpleUDPClient(GAME_IP, GAME_PORT)
 
 while True:
   percent = 100
-  print("1 to set full, 2 for empty, 3 for charge test, 4 for drain test, 5 for disconnect battery.")
+  print("1 to set full")
+  print("2 for empty")
+  print("3 for charge test")
+  print("4 for drain test")
+  print("5 for disconnect battery")
+  print("6 for OVR TOOLKIT - connection with battery level")
+  print("7 for OVR TOOLKIT - connection ONLY")
+  print("8 to clear OVR TOOLKIT")
   inp = int(input("> ") or "-1")
 
   if (inp == 1):
@@ -99,4 +106,18 @@ while True:
   elif (inp == 5):
     chat("disconnect battery test")
     client.send_message(CONNECTION_PARAMETER, -0.9)
+
+  elif (inp == 6):
+    chat("simulate OVR TOOLKIT connection + battery")
+    client.send_message("/avatar/parameters/openOverlayCount", 2)
+    client.send_message("/avatar/parameters/hmdBattery", 100)
+
+  elif (inp == 7):
+    chat("simulate OVR TOOLKIT connection ONLY")
+    client.send_message("/avatar/parameters/openOverlayCount", 2)
+
+  elif (inp == 8):
+    chat("clear OVR TOOLKIT")
+    client.send_message("/avatar/parameters/openOverlayCount", 255)
+    client.send_message("/avatar/parameters/hmdBattery", 255)
 
