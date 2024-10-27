@@ -36,8 +36,9 @@ GAME_PORT = 9000
 
 # the address to write to, set to true when the headset is connected, false when disconnected.
 # for vrchat avatars, set to a BOOL parameter like "/avatar/parameters/<parameter>"
-# CONNECTION_PARAMETER = "/avatar/parameters/VRCOSC/OpenVR/HMD/Battery"
-CONNECTION_PARAMETER = "/avatar/parameters/battery/hmd"
+# CONNECTION_PARAMETER = "/avatar/parameters/VRCOSC/OpenVR/HMD/Battery" # VRCOSC / float
+# CONNECTION_PARAMETER = "/avatar/parameters/battery/hmd" # internal / float
+CONNECTION_PARAMETER = "/avatar/parameters/hmdBattery" # OVR Toolkit / int
 
 # if true, send a chatbox message when the headset loses or regains connection
 USE_CHATBOX = True
@@ -54,19 +55,20 @@ client = udp_client.SimpleUDPClient(GAME_IP, GAME_PORT)
 
 while True:
   percent = 100
-  print("1 to set full")
-  print("2 for empty")
-  print("3 for charge test")
-  print("4 for drain test")
-  print("5 for clear battery")
-  print("6 for OVR TOOLKIT - connection with battery level")
-  print("7 for OVR TOOLKIT - connection ONLY")
-  print("8 to clear OVR TOOLKIT")
+  print("== Simulating OVR Toolkit's parameters ==")
+  print("1 to set full (100)")
+  print("2 for empty (0)")
+  print("3 for charge test (0 to 100)")
+  print("4 for drain test (100 to 0)")
+  print("5 for clear battery (255)")
+  print("6 for OVR TOOLKIT - connection with battery level (connect, 100)")
+  print("7 for OVR TOOLKIT - connection ONLY (connect only)")
+  print("8 to clear OVR TOOLKIT (disconnect)")
   inp = int(input("> ") or "-1")
 
   if (inp == 1):
     chat("batt set to full")
-    client.send_message(CONNECTION_PARAMETER, 1)
+    client.send_message(CONNECTION_PARAMETER, 100)
 
   elif (inp == 2):
     chat("batt set to empty")
@@ -78,7 +80,7 @@ while True:
     percent = 0
 
     while (percent <= 100):
-      valueSent = percent / 100
+      valueSent = percent
       client.send_message(CONNECTION_PARAMETER, valueSent)
 
       # don't spam the chatbox
@@ -93,7 +95,7 @@ while True:
     time.sleep(1)
 
     while (percent >= 0):
-      valueSent = percent / 100
+      valueSent = percent
       client.send_message(CONNECTION_PARAMETER, valueSent)
 
       # don't spam the chatbox
