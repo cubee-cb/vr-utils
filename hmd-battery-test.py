@@ -107,7 +107,7 @@ while True:
 
   elif (inp == 5):
     chat("disconnect battery test")
-    client.send_message(CONNECTION_PARAMETER, -0.9)
+    client.send_message(CONNECTION_PARAMETER, 255)
 
   elif (inp == 6):
     chat("simulate OVR TOOLKIT connection + battery")
