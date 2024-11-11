@@ -8,7 +8,7 @@ As an example, my personal avatar plays a sound and flashes the outline red, the
 In addition, it (by default) sends a chatbox message "\[Headset Disconnected\]" and clears it when the connection is restored so you don't *need* specific avatar setup.
 
 Setup:
-- Make sure you have Python and PythonOSC installed. (pip install pythonosc)
+- Make sure you have Python and PythonOSC installed. (pip install python-osc)
 - Place the script files somewhere ALVR can get to.
 - Open ALVR's config screen. (or session.json, that works too)
 - Change both the "On Connect Script" and "On Disconnect Script" options to contain the *absolute* path to the script.bat file.
