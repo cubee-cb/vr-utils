@@ -38,7 +38,9 @@ GAME_PORT = 9000
 # for vrchat avatars, set to a BOOL parameter like "/avatar/parameters/<parameter>"
 # CONNECTION_PARAMETER = "/avatar/parameters/VRCOSC/OpenVR/HMD/Battery" # VRCOSC / float
 # CONNECTION_PARAMETER = "/avatar/parameters/battery/hmd" # internal / float
-CONNECTION_PARAMETER = "/avatar/parameters/hmdBattery" # OVR Toolkit / int
+#CONNECTION_PARAMETER = "/avatar/parameters/hmdBattery" # OVR Toolkit / int
+CONNECTION_PARAMETER = "/avatar/parameters/headsetBattery" # WlxOverlay / float
+CONNECTION_PARAMETER_CHARGE = "/avatar/parameters/headsetCharging" # WlxOverlay / bool
 
 # if true, send a chatbox message when the headset loses or regains connection
 USE_CHATBOX = True
@@ -55,32 +57,33 @@ client = udp_client.SimpleUDPClient(GAME_IP, GAME_PORT)
 
 while True:
   percent = 100
-  print("== Simulating OVR Toolkit's parameters ==")
-  print("1 to set full (100)")
+  print("== Simulating WlxOverlay's parameters ==")
+  print("1 to set full (1)")
   print("2 for empty (0)")
-  print("3 for charge test (0 to 100)")
-  print("4 for drain test (100 to 0)")
-  print("5 for clear battery (255)")
-  print("6 for OVR TOOLKIT - connection with battery level (connect, 100)")
-  print("7 for OVR TOOLKIT - connection ONLY (connect only)")
-  print("8 to clear OVR TOOLKIT (disconnect)")
+  print("3 for charge test (charging, 0 to 1)")
+  print("4 for drain test (1 to 0)")
+  print("5 for clear battery (-1)")
+  print("6 for connection with battery level (2 overlays, 1 battery)")
+  print("7 for connection ONLY (2 overlays)")
+  print("8 to clear connection and battery (255 overlays, -1 battery)")
   inp = int(input("> ") or "-1")
 
   if (inp == 1):
     chat("batt set to full")
-    client.send_message(CONNECTION_PARAMETER, 100)
+    client.send_message(CONNECTION_PARAMETER, 1.0)
 
   elif (inp == 2):
     chat("batt set to empty")
-    client.send_message(CONNECTION_PARAMETER, 0)
+    client.send_message(CONNECTION_PARAMETER, 0.0)
 
   elif (inp == 3):
     chat("charge test")
+    client.send_message(CONNECTION_PARAMETER_CHARGE, True)
     time.sleep(1)
     percent = 0
 
     while (percent <= 100):
-      valueSent = percent
+      valueSent = percent / 100
       client.send_message(CONNECTION_PARAMETER, valueSent)
 
       # don't spam the chatbox
@@ -90,12 +93,14 @@ while True:
       time.sleep(0.1)
       percent += 1
 
+    client.send_message(CONNECTION_PARAMETER_CHARGE, False)
+
   elif (inp == 4):
     chat("drain test")
     time.sleep(1)
 
     while (percent >= 0):
-      valueSent = percent
+      valueSent = percent / 100
       client.send_message(CONNECTION_PARAMETER, valueSent)
 
       # don't spam the chatbox
@@ -110,16 +115,16 @@ while True:
     client.send_message(CONNECTION_PARAMETER, 255)
 
   elif (inp == 6):
-    chat("simulate OVR TOOLKIT connection + battery")
+    chat("simulate connection + battery")
     client.send_message("/avatar/parameters/openOverlayCount", 2)
-    client.send_message("/avatar/parameters/hmdBattery", 100)
+    client.send_message(CONNECTION_PARAMETER, 1.0)
 
   elif (inp == 7):
-    chat("simulate OVR TOOLKIT connection ONLY")
+    chat("simulate connection ONLY")
     client.send_message("/avatar/parameters/openOverlayCount", 2)
 
   elif (inp == 8):
-    chat("clear OVR TOOLKIT")
+    chat("clear connection and battery")
     client.send_message("/avatar/parameters/openOverlayCount", 255)
-    client.send_message("/avatar/parameters/hmdBattery", 255)
+    client.send_message(CONNECTION_PARAMETER, -1.0)
 
