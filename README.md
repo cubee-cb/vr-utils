@@ -1,9 +1,9 @@
 ## VR OSC Tools
 
-A few tools I've made based on PythonOSC over my time playing VR, to help let others know about my status without having to tell them.
+A few tools I've made based on PythonOSC over my time playing VRChat.
 
 
-# ALVRConnectionOSC - OSC headset connection status updates for ALVR
+## ALVRConnectionOSC - OSC headset connection status updates for ALVR
 
 A small program to send an OSC message with a BOOL value when a headset connects to or disconnects from ALVR, so things can match state. Useful for example if you have an unstable connection or need to leave intermittently.
 
@@ -26,7 +26,7 @@ Known Issues:
 - At the moment on Windows it pops up a Command window whenever it runs. I do not know how to prevent this.
 
 
-# HMD Battery Test - Test integration of battery level indicators
+## HMD Battery Test - Test integration of battery level indicators
 
 A set of tests to check avatar setup for battery-displaying functionality on VRChat avatars, for example, using my [Battery Prefab]([https://cubee.gumroad.com/l/battery-indicator](https://cubee.booth.pm/items/6093346)).
 
@@ -41,7 +41,9 @@ Contains tests:
 - Disconnect OVR Toolkit integration (resets to expected default open overlays value to 255)
 
 Some prefabs or avatars may support connected without battery status - this is what the `connected with no battery` test is for. [Battery Prefab](https://cubee.booth.pm/items/6093346) and [Badge](https://cubee.booth.pm/items/6100939) support this.
-This is because the provider doesn't strictly need to send the battery parameter constantly, for example Wlx-Overlay-S only sends the battery every 10 seconds, while the open overlays are send every 0.1 seconds.
+
+This is because the provider doesn't strictly need to send the battery parameter constantly, for example Wlx-Overlay-S only sends the battery every 10 seconds, while the open overlays are sent every 0.1 seconds.
+
 Indicators may display a "connecting" animation when they receive a different, frequently-updated parameter until they receive a battery level to at least show the connection is working.
 
 My batteries use the following parameters internally:
@@ -52,7 +54,7 @@ My batteries use the following parameters internally:
 They also have a layer that takes in parameters from external OSC-sending software and converts them to the internal format. This simplifies the logic.
 
 
-# OSC Sender - That's all it is
+## OSC Sender - That's all it is
 
 A small script to send singular OSC values to specific addresses. That's it.
 By default prepends "/avatar/parameters/" to all messages - this can be changed.
