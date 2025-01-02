@@ -1,6 +1,6 @@
-## VR OSC Tools
+## VR Utils
 
-A few tools I've made based on PythonOSC over my time playing VRChat.
+A few tools I've made over my time playing VRChat.
 
 
 ## [ALVRConnectionOSC](alvr-connection-osc) - OSC headset connection status updates for ALVR
@@ -55,12 +55,20 @@ My batteries use the following parameters internally:
 They also have a layer that takes in parameters from external OSC-sending software and converts them to the internal format. This simplifies the logic.
 
 
-## [OSC Sender](osc-sender.py) - Simple parameter setter
+## [ProTV3 Playlist From Files](protv-playlist-from-files.py)
+
+Walks a directory, reading in filenames and extracting YouTube IDs from them.
+Expected format: `name of video [youtube id]` (this is the format output by yt-dlp, extensions are ignored)
+These are formatted into the ProTV3 playlist format, with the video title sanitised and a link generated from the ID, and written to a file named `protv_playlist.txt`.
+
+If you don't want to store/download the actual video files, making dummy files works too, just name them `video title [youtube id]` as above.
+
+
+## [OSC Sender](osc-sender.py)
 
 A small script to send singular OSC values to specific addresses. That's it.
 By default prepends "/avatar/parameters/" to all messages - this can be changed.
 
-,,
 
 References:
 - [PythonOSC](https://github.com/attwad/python-osc)
