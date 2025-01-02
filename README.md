@@ -10,7 +10,7 @@ A small program to send an OSC message with a BOOL value when a headset connects
 By default it is set up to set a VRChat avatar parameter `hardware/headsetConnected` (Bool), which your avatar can be set up read to enter an "away" or "error" state to let other people know you can't hear or see them anymore.
 As an example, my personal avatar plays a sound and flashes the outline red, then changes to a Resonite-style away material when I disconnect.
 
-In addition, it (by default) sends a chatbox message `[Headset Disconnected]` and clears it when the connection is restored so you don't *need* specific avatar setup.
+In addition, it (by default) sends a chatbox message `[Headset Disconnected]` and clears it when the connection is restored so you don't *need* specific avatar setup. (though it can be funny for others if your avatar does something in the meantime)
 
 Setup:
 - Make sure you have Python3 and PythonOSC installed. (`pip install python-osc`)
@@ -48,17 +48,17 @@ This is because the provider doesn't strictly need to send the battery parameter
 Indicators may display a "connecting" animation when they receive a different, frequently-updated parameter until they receive a battery level to at least show the connection is working.
 
 My batteries use the following parameters internally:
-- battery/level - The level shown on the batteries.
-- battery/charging - Whether to show the charging indicator.
-- battery/visible - If the battery indicator should be shown or not.
-- battery/connected - If the provider is connected but may not be sending battery yet. This is not required to be set before showing the battery level.
+- `battery/level` - The level shown on the batteries.
+- `battery/charging` - Whether to show the charging indicator.
+- `battery/visible` - If the battery indicator should be shown or not.
+- `battery/connected` - If the provider is connected but may not be sending battery yet. This is not required to be set before showing the battery level.
 They also have a layer that takes in parameters from external OSC-sending software and converts them to the internal format. This simplifies the logic.
 
 
 ## [ProTV3 Playlist From Files](protv-playlist-from-files.py)
 
 Walks a directory, reading in filenames and extracting YouTube IDs from them.
-Expected format: `name of video [youtube id]` (this is the format output by yt-dlp, extensions are ignored)
+Expected format: `video title [youtube id]` (this is the format output by yt-dlp, extensions are ignored)
 These are formatted into the ProTV3 playlist format, with the video title sanitised and a link generated from the ID, and written to a file named `protv_playlist.txt`.
 
 If you don't want to store/download the actual video files, making dummy files works too, just name them `video title [youtube id]` as above.
