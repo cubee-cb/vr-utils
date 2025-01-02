@@ -1,7 +1,8 @@
+#!/usr/bin/env python3
 """
 OSC sender
 
-send arbitrary values to arbitrary parameters
+send arbitrary values to arbitrary avatar parameters
 
 https://github.com/attwad/python-osc
 """

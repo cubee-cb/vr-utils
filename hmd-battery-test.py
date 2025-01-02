@@ -1,32 +1,14 @@
+#!/usr/bin/env python3
 """
-ALVRHiccupOSC
-
-Small program to send an OSC message with a BOOL value when a headset connects or disconnects to ALVR, describing its current connection status.
-
-Setup:
-- Place the script files somewhere ALVR can get to.
-- Open ALVR's config screen. (or session.json if you're feeling special)
-- Change the "On Connect Script" and "On Disconnect Script" options to contain the *absolute* path to the script.bat file.
-  - Linux users: make a .sh file that runs connection.py and use that. I trust you know at least how to do that. I have no Linux VR setup at the moment so I can't test.
-
-https://github.com/attwad/python-osc
+battery tester for vrchat prefabs
 """
 
-import os
 import time
-from tkinter import messagebox
-from pythonosc.dispatcher import Dispatcher
 from pythonosc import udp_client
 
 PROJECT = "battery test"
-CONNECTED = "connect"
-DISCONNECTED = "disconnect"
-
 
 # change the following to match your setup
-
-# streaming software display name.
-STREAMER = "ALVR"
 
 # leave this unless the target game is running on a different device.
 GAME_IP = "127.0.0.1"
@@ -57,7 +39,7 @@ client = udp_client.SimpleUDPClient(GAME_IP, GAME_PORT)
 
 while True:
   percent = 100
-  print("== Simulating WlxOverlay's parameters ==")
+  print("== Simulating WlxOverlay-S + standardised parameters ==")
   print("1 to set full (1)")
   print("2 for empty (0)")
   print("3 for charge test (charging, 0 to 1)")
