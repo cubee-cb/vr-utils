@@ -3,7 +3,8 @@
 A few tools I've made over my time playing VRChat.
 
 
-## [ALVRConnectionOSC](alvr-connection-osc) - OSC headset connection status updates for ALVR
+## [ALVRConnectionOSC](alvr-connection-osc)
+### OSC headset connection status updates for ALVR
 
 A small program to send an OSC message with a BOOL value when a headset connects to or disconnects from ALVR, so things can match state. Useful for example if you have an unstable connection or need to leave intermittently.
 
@@ -27,7 +28,8 @@ Known Issues:
 - May not work on Linux, can't test it since my setup doesn't even use SteamVR, let alone ALVR.
 
 
-## [HMD Battery Test](hmd-battery-test.py) - Test integration of battery level indicators
+## [HMD Battery Test](hmd-battery-test.py)
+### Test integration of battery level indicators
 
 A set of tests to check avatar setup for battery-displaying functionality on VRChat avatars, for example, using my [Battery Prefab](https://cubee.booth.pm/items/6093346).
 
