@@ -1,10 +1,13 @@
 #!/usr/bin/env python
 """
-pythonosc: https://pypi.org/project/python-osc/
-adb_shell: https://github.com/JeffLIrion/adb_shell
+by cubee
 
 pass "keygen" ("script.py keygen") to re-generate the keys if needed.
 pass "verbose" ("script.py verbose") to print out all battery info returned from adb.
+
+using:
+pythonosc: https://pypi.org/project/python-osc/
+adb_shell: https://github.com/JeffLIrion/adb_shell
 """
 
 
@@ -31,16 +34,9 @@ PARAMETER_OVERLAYS = "/avatar/parameters/openOverlayCount" # WlxOverlay / int
 PARAMETER_BATTERY = "/avatar/parameters/headsetBattery" # WlxOverlay / float
 PARAMETER_CHARGE = "/avatar/parameters/headsetCharging" # WlxOverlay / bool
 
-# if true, send a chatbox message when the headset loses or regains connection
-USE_CHATBOX = True
-
 # timers for sending things, seconds
 TIMER_POLL_BATTERY = 10 # interval to poll the device's battery level
 TIMER_CONNECTION = 1 # interval to tell the game we are connected
-
-def chat(message):
-  print(message)
-  client.send_message("/chatbox/input", [message, True, False])
 
 # main
 
