@@ -3,7 +3,7 @@
 A few tools I've made over my time playing VRChat.
 
 
-## [ALVRConnectionOSC](alvr-connection-osc.py)
+## [ALVRConnectionOSC](alvr-connection-osc)
 ### OSC headset connection status updates for ALVR
 
 A small program to send an OSC message with a BOOL value when a headset connects to or disconnects from ALVR, so things can match state. Useful for example if you have an unstable connection or need to leave intermittently.
