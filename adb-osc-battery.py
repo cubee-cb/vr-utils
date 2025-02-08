@@ -76,7 +76,7 @@ signer = PythonRSASigner(pub, priv)
 print("Loaded ADB key.")
 
 print("==", PROJECT, "==")
-print("Talking to", ADB_USB and "USB Device" or DEVICE_IP, "over OSC:" + str(OSC_PORT), ADB_USB and "" or ("and ADB:" + str(ADB_PORT)))
+print("Talking to", ADB_USB and "USB Device" or DEVICE_IP, "over OSC:" + str(OSC_PORT), ADB_USB and " " or ("and ADB:" + str(ADB_PORT)))
 
 # connect to device over adb
 device = ADB_USB and AdbDeviceUsb() or AdbDeviceTcp(DEVICE_IP, ADB_PORT, default_transport_timeout_s=9.)
