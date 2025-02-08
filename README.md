@@ -37,6 +37,7 @@ Currently, it is only tested over USB, but set `ADB_USB = True` in the script to
 
 To use it:
 - Make sure you have Python3, `python-osc` and `adb-shell` installed. (`pip install python-osc`, `pip install adb-shell[usb]`)
+- Edit the script to change `DEVICE_IP` to the IP address or hostname of your headset. This is always used for OSC, and when using ADB wirelessly.
 - Run the script to generate key files for adb. These are stored alongside the script.
 - If `ADB_USB` is `True`, it will try connecting over USB. Make sure the headset is the only Android device plugged in, and stop any other ADB servers. (`adb kill-server`)
   - Otherwise, if `ADB_USB` is `False`, it will try connecting wirelessly to `DEVICE_IP`. Make sure `Wireless Debugging` is enabled in Developer Settings if possible. (The setting doesn't seem to exist on my Pico 4)
