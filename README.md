@@ -38,10 +38,11 @@ Currently, it is only tested over USB, but set `ADB_USB = True` in the script to
 To use it:
 - Make sure you have Python3, `python-osc` and `adb-shell` installed. (`pip install python-osc`, `pip install adb-shell[usb]`)
 - Run the script to generate key files for adb. These are stored alongside the script.
-- If `ADB_USB` is true, it will try connecting over USB. Make sure the headset is the only Android device plugged in, and stop any other ADB servers. (`adb kill-server`)
-  - Otherwise, it will try connecting wirelessly to `DEVICE_IP`. Make sure `Wireless Debugging` is enabled in Developer Settings if possible. (The setting doesn't seem to exist on my Pico 4)
+- If `ADB_USB` is `True`, it will try connecting over USB. Make sure the headset is the only Android device plugged in, and stop any other ADB servers. (`adb kill-server`)
+  - Otherwise, if `ADB_USB` is `False`, it will try connecting wirelessly to `DEVICE_IP`. Make sure `Wireless Debugging` is enabled in Developer Settings if possible. (The setting doesn't seem to exist on my Pico 4)
 - If all goes well, it should start printing battery level and charging state every 10 seconds.
   - Pass `verbose` as the script argument if you want to see all the data grabbed from the device.
+- Opening the OSC debug panel in VRChat should show you the parameters updating as they get printed to the console.
 
 Uses:
 - ['python-osc'](https://github.com/attwad/python-osc)
