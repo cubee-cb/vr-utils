@@ -3,7 +3,7 @@
 A few tools I've made over my time playing VRChat.
 
 
-## [ALVRConnectionOSC](alvr-connection-osc)
+## [ALVRConnectionOSC](alvr-connection-osc.py)
 ### OSC headset connection status updates for ALVR
 
 A small program to send an OSC message with a BOOL value when a headset connects to or disconnects from ALVR, so things can match state. Useful for example if you have an unstable connection or need to leave intermittently.
@@ -26,6 +26,26 @@ You can edit the script to change basic functionality, there are some variables 
 Known Issues:
 - At the moment on Windows it pops up a Command window whenever it runs. I do not know how to prevent this.
 - May not work on Linux, can't test it since my setup doesn't even use SteamVR, let alone ALVR.
+
+
+## [ADB-OSC Battery Relay](adb-osc-battery.py)
+### Battery level relay for standalone VRChat
+
+This is a small script that uses ADB commands to obtain the headset's battery and charging status, to send over OSC much like WlxOverlay-S and similar overlays for PC. In fact, it simulates the exact headset parameters sent by WlxOverlay-S!
+
+Currently, it is only tested over USB, but set `ADB_USB = True` in the script to `False` and you should be able to configure it to run wirelessly too.
+
+To use it:
+- Make sure you have Python3, `python-osc` and `adb-shell` installed. (`pip install python-osc`, `pip install adb-shell[usb]`)
+- Run the script to generate key files for adb. These are stored alongside the script.
+- If `ADB_USB` is true, it will try connecting over USB. Make sure the headset is the only Android device plugged in, and stop any other ADB servers. (`adb kill-server`)
+  - Otherwise, it will try connecting wirelessly to `DEVICE_IP`. Make sure `Wireless Debugging` is enabled in Developer Settings if possible. (The setting doesn't seem to exist on my Pico 4)
+- If all goes well, it should start printing battery level and charging state every 10 seconds.
+  - Pass `verbose` as the script argument if you want to see all the data grabbed from the device.
+
+Uses:
+- ['python-osc'](https://github.com/attwad/python-osc)
+- [`adb-shell`](https://github.com/JeffLIrion/adb_shell)
 
 
 ## [HMD Battery Test](hmd-battery-test.py)
