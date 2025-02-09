@@ -44,6 +44,7 @@ Usage: `adb-osc-battery.py <mode> <device_ip> <osc_port>`
 - `adb-osc-battery.py wireless 192.168.0.255 verbose` - Wireless ADB and send OSC to the address, default port and show all data.
 
 Step-by-step:
+- Enable Developer Mode on your device and turn on USB Debugging and/or Wireless Debugging.
 - Make sure you have Python3, `python-osc` and `adb-shell` installed. (`pip install python-osc`, `pip install adb-shell[usb]`)
 - Edit the script to change `DEVICE_IP` to the IP address or hostname of your headset. This is always used for OSC, and when using ADB wirelessly.
 - Run the script to generate key files for adb. These are stored alongside the script.
