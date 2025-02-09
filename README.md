@@ -33,20 +33,28 @@ Known Issues:
 
 This is a small script that uses ADB commands to obtain the headset's battery and charging status, to send over OSC much like WlxOverlay-S and similar overlays for PC. In fact, it simulates the exact headset parameters sent by WlxOverlay-S!
 
+It should work with any Android-based version of VRChat, including Quest, Pico, and Mobile.
+
 Currently, it is only tested over USB, but set `ADB_USB = True` in the script to `False` and you should be able to configure it to run wirelessly too.
 
-To use it:
+Usage: `adb-osc-battery.py <mode> <device_ip> <osc_port>`
+- `adb-osc-battery.py` - Defaults to USB ADB, IP and Ports specified in the script.
+- `adb-osc-battery.py usb 192.168.0.255` - USB ADB and send OSC to the address, default port.
+- `adb-osc-battery.py wireless 192.168.0.255 9008` - Wireless ADB and send OSC to the address, port 9008.
+- `adb-osc-battery.py wireless 192.168.0.255 verbose` - Wireless ADB and send OSC to the address, default port and show all data.
+
+Step-by-step:
 - Make sure you have Python3, `python-osc` and `adb-shell` installed. (`pip install python-osc`, `pip install adb-shell[usb]`)
 - Edit the script to change `DEVICE_IP` to the IP address or hostname of your headset. This is always used for OSC, and when using ADB wirelessly.
 - Run the script to generate key files for adb. These are stored alongside the script.
 - If `ADB_USB` is `True`, it will try connecting over USB. Make sure the headset is the only Android device plugged in, and stop any other ADB servers. (`adb kill-server`)
   - Otherwise, if `ADB_USB` is `False`, it will try connecting wirelessly to `DEVICE_IP`. Make sure `Wireless Debugging` is enabled in Developer Settings if possible. (The setting doesn't seem to exist on my Pico 4)
 - If all goes well, it should start printing battery level and charging state every 10 seconds.
-  - Pass `verbose` as the script argument if you want to see all the data grabbed from the device.
+  - Append `verbose` when running the script if you want to see all the data grabbed from the device.
 - Opening the OSC debug panel in VRChat should show you the parameters updating as they get printed to the console.
 
 Uses:
-- ['python-osc'](https://github.com/attwad/python-osc)
+- [`python-osc`](https://github.com/attwad/python-osc)
 - [`adb-shell`](https://github.com/JeffLIrion/adb_shell)
 
 

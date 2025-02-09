@@ -58,13 +58,24 @@ if not path.exists(key_path):
 
 VERBOSE = False
 if len(sys.argv) > 1:
-  cmd = sys.argv[1]
-  if cmd == "keygen":
+
+  if "keygen" in sys.argv:
     print("Generating ADB key.")
     keygen(key_path)
     print("Done!")
     sys.exit(1)
-  elif cmd == "verbose":
+
+  ADB_USB = sys.argv[1].lower() != "wireless"
+  if len(sys.argv) > 2:
+    if "." in sys.argv[2]:
+      DEVICE_IP = sys.argv[2]
+  if len(sys.argv) > 3:
+    try:
+      OSC_PORT = int(sys.argv[3])
+    except:
+      OSC_PORT = OSC_PORT
+
+  if "verbose" in sys.argv:
     VERBOSE = True
 
 # Load the public and private keys
@@ -76,10 +87,16 @@ signer = PythonRSASigner(pub, priv)
 print("Loaded ADB key.")
 
 print("==", PROJECT, "==")
-print("Talking to", ADB_USB and "USB Device" or DEVICE_IP, "over OSC:" + str(OSC_PORT), ADB_USB and " " or ("and ADB:" + str(ADB_PORT)))
+print("Talking to", DEVICE_IP, "over OSC:" + str(OSC_PORT), ADB_USB and "and USB ADB" or ("and ADB:" + str(ADB_PORT)))
 
 # connect to device over adb
-device = ADB_USB and AdbDeviceUsb() or AdbDeviceTcp(DEVICE_IP, ADB_PORT, default_transport_timeout_s=9.)
+device = False
+try:
+  device = ADB_USB and AdbDeviceUsb() or AdbDeviceTcp(DEVICE_IP, ADB_PORT, default_transport_timeout_s=9.)
+except:
+  print("Device not found.")
+  sys.exit(1)
+
 try:
   device.connect(rsa_keys=[signer], auth_timeout_s=0.1)
 except ConnectionRefusedError:
@@ -87,17 +104,18 @@ except ConnectionRefusedError:
   sys.exit(1)
 except:
   print("Failed to connect to ADB device.")
-  print(ADB_USB and "Is there another ADB server running? Try \"adb kill-server\" to close it. (may kill WiVRn if running)" or "Some unknown error.")
+  print(ADB_USB and "Is USB Debugging enabled? Is there another ADB server running? Try \"adb kill-server\" to close it. (may kill WiVRn if running)" or "Some unknown error.")
   sys.exit(1)
 
 # set up udp client for sending osc data to vrchat
 try:
   client = udp_client.SimpleUDPClient(DEVICE_IP, OSC_PORT)
 except:
-  print("Couldn't start OSC client. Is pythonosc installed?")
+  print("Couldn't start OSC client. Is pythonosc installed? Did you pass a valid IP and Port?")
   sys.exit(1)
 
 loops = 0
+failed_loops = 0
 while True:
   #proc = subprocess.check_output(["adb", "shell", "dumpsys", "battery", "|", "grep", "level"])
   #proc = proc.strip().split(b":")[1].strip()
@@ -109,38 +127,48 @@ while True:
   #print(charging)
 
 
-  # let the avatar's battery know an "overlay" is connected
-  # we can do this since android HMDs don't do custom overlays,
-  #   nor do their integrated dashboards use osc
+  # let the avatar know an "overlay" is connected
+  # this parameter should default to 255 on the avatar,
+  #   so it can detect when the overlays set it to 0, 1, 2, etc...
   if loops % TIMER_CONNECTION == 0:
-    client.send_message(PARAMETER_OVERLAYS, 1)
+    client.send_message(PARAMETER_OVERLAYS, 0)
 
 
   # poll the device for new information and forward it to vrchat
   if loops % TIMER_POLL_BATTERY == 0:
 
     # get raw data from the adb device
-    battery_data_adb = device.shell("dumpsys battery").split("\n")
+    try:
+      battery_data_raw = device.shell("dumpsys battery")
 
-    # process battery data into a dictionary
-    battery_data = {}
-    for line in battery_data_adb:
-      split_data = line.strip().split(": ")
-      if len(split_data) == 2:
-        key, value = split_data
-        battery_data[key] = value
-        if VERBOSE:
-          print(key, "-", value)
+      # process battery data into a dictionary
+      battery_data = {}
+      for line in battery_data_raw.split("\n"):
+        split_data = line.strip().split(": ")
+        if len(split_data) == 2:
+          key, value = split_data[0].lower(), split_data[1]
+          battery_data[key] = value
+          if VERBOSE:
+            print(key, "-", value)
 
-    # now we can use the values easily!
-    percent = int(battery_data.get("level")) or 255
-    charging = bool(battery_data.get("AC powered")) or bool(battery_data.get("USB powered")) or bool(battery_data.get("Wireless powered"))
+      # now we can use the values easily!
+      percent = int(battery_data.get("level")) or 255
+      charging = bool(battery_data.get("ac powered")) or bool(battery_data.get("usb powered")) or bool(battery_data.get("wireless powered"))
 
-    print(f"Got battery level: {percent}% (Charging: {charging})")
+      print(f"Got battery level: {percent}% (Charging: {charging})")
 
-    #chat("batt set to full")
-    client.send_message(PARAMETER_BATTERY, percent / 100.0)
-    client.send_message(PARAMETER_CHARGE, charging)
+      #chat("batt set to full")
+      client.send_message(PARAMETER_BATTERY, percent / 100.0)
+      client.send_message(PARAMETER_CHARGE, charging)
+
+      failed_loops = 0
+
+    except:
+      print("Couldn't get data from device!")
+      failed_loops += 1
+      if failed_loops >= 3:
+        print("Stopping.")
+        sys.exit(1)
 
   # loop once per second
   time.sleep(1)
