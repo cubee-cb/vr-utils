@@ -33,7 +33,7 @@ Known Issues:
 
 This is a small script that uses ADB commands to obtain the headset's battery and charging status, to send over OSC much like WlxOverlay-S and similar overlays for PC. In fact, it simulates the exact headset parameters sent by WlxOverlay-S!
 
-It should work with any Android-based version of VRChat, including Quest, Pico, and Mobile.
+It should work with any Android-based version of VRChat, including Quest, Pico, and Mobile. Note that this still requires another device to run the script itself on. (unless you can run it in the background, maybe possible with termux or something)
 
 Currently, it is only tested over USB, but set `ADB_USB = True` in the script to `False` and you should be able to configure it to run wirelessly too.
 
