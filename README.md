@@ -88,6 +88,19 @@ My batteries use the following parameters internally:
 They also have a layer that takes in parameters from external OSC-sending software and converts them to the internal format. This simplifies the logic.
 
 
+## [Snitch](snitch.py)
+### [VRChat-AFK-Status](https://gitea.moe/lamp/VRChat-AFK-Status) for Kwin/Wayland
+
+Pretty much just checks what the active window is, then shows or hides the chatbox with the active window's title based on if it's VRChat or not.
+
+Since it uses `kdotool`, it only works on Kwin/Plasma. Could likely replace it inplace with `xdotool` if you're using an X-based environment.
+
+ALSO, since it can send the window title to chatbox (there is a variable to turn this on), consider avoiding any windows that may show sensitive info in the title bar! (filenames, browser tabs, working directories, etc...)
+People can also see when you have unsaved changes in your text files lol, since the `*` is part of the title.
+
+Depends on `kdotool` being available in `PATH`. Simply runs `kdotool getactivewindow getwindowname` via `subprocess` and forwards it to the vrchat chatbox and an avatar parameter `focused`.
+
+
 ## [ProTV3 Playlist From Files](protv-playlist-from-files.py)
 
 Walks a directory, reading in filenames and extracting YouTube IDs from them.
