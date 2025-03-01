@@ -109,5 +109,5 @@ References:
 - [ADB Shell](https://github.com/JeffLIrion/adb_shell)
 
 Shameless Self-Promotion:
-- [Battery Prefab](https://cubee.booth.pm/items/6093346) (Full battery support; waiting for battery, battery level, charging)
+- [Battery Prefab](https://cubee.booth.pm/items/6093346) (Full battery support; waiting for battery, battery level, charging, + trackers mode)
 - [Badge Avatar](https://cubee.booth.pm/items/6100939) (Partial battery support; waiting for battery, battery level)
