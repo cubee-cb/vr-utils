@@ -102,10 +102,12 @@ If you don't want to store/download the actual video files, making dummy files w
 A small script to send singular OSC values to specific addresses. That's it.
 By default prepends "/avatar/parameters/" to all messages - this can be changed.
 
+---
 
 References:
 - [PythonOSC](https://github.com/attwad/python-osc)
+- [ADB Shell](https://github.com/JeffLIrion/adb_shell)
 
 Shameless Self-Promotion:
-- [Battery Prefab](https://cubee.booth.pm/items/6093346) (Full battery support)
-- [Badge Avatar](https://cubee.booth.pm/items/6100939) (Partial battery support)
+- [Battery Prefab](https://cubee.booth.pm/items/6093346) (Full battery support; waiting for battery, battery level, charging)
+- [Badge Avatar](https://cubee.booth.pm/items/6100939) (Partial battery support; waiting for battery, battery level)
